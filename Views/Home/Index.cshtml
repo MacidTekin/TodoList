@@ -1,0 +1,63 @@
+﻿@model IEnumerable<TodoList.Models.Task>
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <h3 class="text">Task List</h3>
+
+            <!-- Search and Category Filter Form -->
+            <form method="get" action="/Home/Index" class="mb-3">
+                <div class="input-group mb-3">
+                    <input 
+                    type="text" 
+                    name="searchString" 
+                    class="form-control" 
+                    value="@ViewBag.SearchString" 
+                    placeholder="Search tasks..." />
+                    <button type="submit" class="btn btn-primary">Search</button>
+                </div>
+                
+                <!-- Category Filter -->
+                <div class="input-group mb-3">
+                    <select name="categoryStatus" class="form-control">
+                        <option value="">Hepsi</option>
+                        @Html.Raw("<option value=\"true\"" + (ViewBag.CategoryStatus == true ? " selected" : "") + ">Tamamlanmış</option>")
+                        @Html.Raw("<option value=\"false\"" + (ViewBag.CategoryStatus == false ? " selected" : "") + ">Tamamlanmamış</option>")
+                    </select>
+                    <button type="submit" class="btn btn-primary">Filter</button>
+                </div>
+            </form>
+
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Task Name</th>
+                        <th>Status</th>
+                        <th>Deadline</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach(var tsk in Model)
+                    {
+                        <tr>
+                            <td>@tsk.TaskName</td>
+                            <td>@(tsk.Status ? "Tamamlanmış" : "Tamamlanmamış")</td>
+                            <td>@tsk.Deadline.ToString("dd/MM/yyyy")</td>
+                            <td>
+                                <a href="@Url.Action("Edit", new { id = tsk.TaskId })" class="btn btn-primary btn-sm" style="width: 49%;">Edit</a>
+                                <form method="post" action="/Home/Delete" style="display:inline; width: 49%;">
+                                    <input type="hidden" name="id" value="@tsk.TaskId" />
+                                    <button type="submit" class="btn btn-danger btn-sm" style="width: 49%;">Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

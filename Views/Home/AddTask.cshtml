@@ -1,0 +1,34 @@
+﻿@model TodoList.Models.Task
+
+@{
+    ViewData["Title"] = "Add Task";
+}
+
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <h3 class="text-center">Add Task</h3>
+            <form asp-action="AddTask" method="post">
+                <div class="form-group">
+                    <label for="task">Task</label>
+                    <input type="text" class="form-control" id="task" name="TaskName" placeholder="Enter Task" required>
+                </div>
+                <div class="form-group">
+                    <label for="status">Status</label>
+                    <select class="form-control" id="status" name="Status" required>
+                        <option value="false">Tamamlanmamış</option>
+                        <option value="true">Tamamlanmış</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="deadline">Deadline</label>
+                    <input type="datetime-local" class="form-control" id="deadline" name="Deadline" required>
+                </div>
+                <div class="text-center mt-4">
+                    <button type="submit" class="btn btn-success">Add Task</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
